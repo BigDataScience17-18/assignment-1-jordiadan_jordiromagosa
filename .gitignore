@@ -172,5 +172,8 @@ venv.bak/
 
 # End of https://www.gitignore.io/api/python,pycharm
 
-.idea
-venv
+
+
+# Custom
+clean_data.txt
+
