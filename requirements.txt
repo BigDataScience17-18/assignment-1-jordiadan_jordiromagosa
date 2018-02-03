@@ -1,5 +1,7 @@
 numpy
+scipy
 scikit-learn
 pandas
+pypiwin32
 scrapy == 1.5.0
 requests

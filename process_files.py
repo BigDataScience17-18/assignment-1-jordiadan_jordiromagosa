@@ -35,7 +35,7 @@ def get_reading(line):
 def process_file(file_name, overwrite=False):
 
     raw_file = open(file_name, "r")
-    splitted_file_name = "results/" + basename(file_name).split('.')[0]+".txt";
+    splitted_file_name = "results/" + basename(file_name).split('.')[0]+".txt"
 
     if overwrite:
         result_file = open(splitted_file_name, 'w')
