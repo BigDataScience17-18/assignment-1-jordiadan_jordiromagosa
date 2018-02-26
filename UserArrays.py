@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 
 trainAlcoholic = [
@@ -99,6 +98,6 @@ def feature_engineering_column(data):
     return mean_table.reset_index()
 
 
-test_data = read_file(364, True)
+test_data = get_test_alcoholic()
 
-print(feature_engineering_column(test_data))
+print(feature_engineering_row(test_data))
