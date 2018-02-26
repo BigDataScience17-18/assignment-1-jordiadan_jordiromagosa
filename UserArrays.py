@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 trainAlcoholic = [
@@ -28,8 +29,8 @@ testNonAlcoholic = [
 
 def get_column_names():
     column_names = ["Id", "Alcoholic", "Paradigm", "Replication", "Channel"]
-    for i in range(256):
-        column_names.append("Reading " + str(i+1))
+    for reading in range(256):
+        column_names.append("Reading " + str(reading+1))
     return column_names
 
 
@@ -48,8 +49,8 @@ def read_file(user_id, alcoholic):
 
 def read_all_users(users, alcoholic):
     all_users = read_file(users[0], alcoholic)
-    for i in range(1, len(users)):
-        temp_users = all_users.append(read_file(users[i], alcoholic))
+    for user in range(1, len(users)):
+        temp_users = all_users.append(read_file(users[user], alcoholic))
         all_users = temp_users
     return all_users
 
@@ -72,8 +73,8 @@ def get_test_non_alcoholic():
 
 def feature_engineering_row(data):
     reading_columns = []
-    for i in range(256):
-        reading_columns.append("Reading " + str(i + 1))
+    for reading in range(256):
+        reading_columns.append("Reading " + str(reading + 1))
     processed_data = data.copy()
     processed_data["Min"] = processed_data[reading_columns].min(axis=1)
     processed_data["Max"] = processed_data[reading_columns].max(axis=1)
@@ -89,8 +90,15 @@ def feature_engineering_row(data):
     return processed_data.drop(columns=reading_columns)
 
 
+def feature_engineering_column(data):
+    reading_columns = []
+    for reading in range(256):
+        reading_columns.append("Reading " + str(reading + 1))
+    mean_table = data.groupby(["Id", "Alcoholic", "Paradigm", "Channel"])[reading_columns].mean()
+
+    return mean_table.reset_index()
+
+
 test_data = read_file(364, True)
 
-test_data = feature_engineering_row(test_data)
-
-print(test_data)
+print(feature_engineering_column(test_data))
