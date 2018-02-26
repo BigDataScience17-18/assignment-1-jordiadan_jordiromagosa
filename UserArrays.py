@@ -70,24 +70,27 @@ def get_test_non_alcoholic():
     return read_all_users(testNonAlcoholic, False)
 
 
-user = read_file(364, True)
+def feature_engineering_row(data):
+    reading_columns = []
+    for i in range(256):
+        reading_columns.append("Reading " + str(i + 1))
+    processed_data = data.copy()
+    processed_data["Min"] = processed_data[reading_columns].min(axis=1)
+    processed_data["Max"] = processed_data[reading_columns].max(axis=1)
+    processed_data["Std"] = processed_data[reading_columns].std(axis=1)
+    processed_data["Mean"] = processed_data[reading_columns].mean(axis=1)
+    processed_data["Median"] = processed_data[reading_columns].median(axis=1)
+    processed_data["Quantile025"] = processed_data[reading_columns].quantile(0.025, axis=1)
+    processed_data["Quantile25"] = processed_data[reading_columns].quantile(0.25, axis=1)
+    processed_data["Quantile75"] = processed_data[reading_columns].quantile(0.75, axis=1)
+    processed_data["Quantile975"] = processed_data[reading_columns].quantile(0.975, axis=1)
+    processed_data["IQR"] = processed_data["Quantile75"] - processed_data["Quantile25"]
 
-readings = []
-for i in range(256):
-    readings.append("Reading " + str(i + 1))
-
-user["Min"] = user[readings].min(axis=1)
-user["Max"] = user[readings].max(axis=1)
-user["Std"] = user[readings].std(axis=1)
-user["Mean"] = user[readings].mean(axis=1)
-user["Median"] = user[readings].median(axis=1)
-user["Quantile025"] = user[readings].quantile(0.025, axis=1)
-user["Quantile25"] = user[readings].quantile(0.25, axis=1)
-user["Quantile75"] = user[readings].quantile(0.75, axis=1)
-user["Quantile975"] = user[readings].quantile(0.975, axis=1)
-user["IQR"] = user["Quantile75"] - user["Quantile25"]
+    return processed_data.drop(columns=reading_columns)
 
 
-user = user.drop(columns=readings)
+test_data = read_file(364, True)
 
-print(user)
+test_data = feature_engineering_row(test_data)
+
+print(test_data)
