@@ -1,5 +1,5 @@
 import pandas as pd
-
+import os
 
 trainAlcoholic = [
     385,    1384,   380,    1382,   418,    412,    372,    1396,   1364,   1395,   1381,   444,    437,    426,
@@ -98,6 +98,31 @@ def feature_engineering_column(data):
     return mean_table.reset_index()
 
 
-test_data = get_test_alcoholic()
+def create_and_get_path_engineering(identification_path):
+    if not os.path.exists("engineered"):
+        os.makedirs("engineered")
+    return "engineered/" + identification_path + ".csv"
 
-print(feature_engineering_row(test_data))
+
+def user_feature_engineering_and_save(user_id, alcoholic, columns, identification_path):
+    data = read_file(user_id, alcoholic)
+    if columns:
+        data = feature_engineering_column(data)
+        identification_path += "_columns"
+    else:
+        data = feature_engineering_row(data)
+        identification_path += "_rows"
+    path = create_and_get_path_engineering(identification_path)
+    data.to_csv(path, header=False, index=False, mode="a")
+
+
+def process_all_users_feature_engineering(user_ids, alcoholic, identification_path):
+    for user in user_ids:
+        user_feature_engineering_and_save(user, alcoholic, True, identification_path)
+        user_feature_engineering_and_save(user, alcoholic, False, identification_path)
+
+
+process_all_users_feature_engineering(trainAlcoholic, True, "train_alcoholic")
+# process_all_users_feature_engineering(trainNonAlcoholic, True, "train_non_alcoholic")
+process_all_users_feature_engineering(testAlcoholic, True, "test_alcoholic")
+# process_all_users_feature_engineering(testNonAlcoholic, True, "test_non_alcoholic")
