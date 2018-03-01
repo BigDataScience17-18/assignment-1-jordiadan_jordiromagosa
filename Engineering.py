@@ -2,27 +2,19 @@ import pandas as pd
 import os
 
 trainAlcoholic = [
-    385,    1384,   380,    1382,   418,    412,    372,    1396,   1364,   1395,   1381,   444,    437,    426,
-    424,    436,    1402,   429,    411,    386,    445,    440,    1370,   407,    398,    403,    404,    1371,
-    435,    1390,   400,    428,    1388,   1394,   1379,   1378,   377,    439,    414,    375,    434,    415,
-    427,    368,    365,    433
+    364,    365,    368,    369,    370,    371,    372,    375,    377,    378
 ]
 
 trainNonAlcoholic = [
-    450,    339,    396,    354,    370,    461,    351,    458,    451,    457,    379,    338,    364,    378,
-    389,    382,    402,    356,    453,    394,    340,    371,    460,    346,    344,    355,    381,    459,
-    395,    357,    456,    337,    367,    454,    359,    448,    392,    345,    348,    341
+    337,    338,    339,    340,    341,    342,    344,    345,    346,    347
 ]
 
 testAlcoholic = [
-    369,    405,    406,    409,    410,    416,    417,    419,    421,    422,    423,    425,    430,    432,
-    438,    443,    447,    1387,   1392
+    379,    380,    381,    382,    384,    385,    386,    387,    388,    390
 ]
 
 testNonAlcoholic = [
-    450,    339,    396,    354,    370,    461,    351,    458,    451,    457,    379,    338,    364,    378,
-    389,    382,    402,    356,    453,    394,    340,    371,    460,    346,    344,    355,    381,    459,
-    395,    357,    456,    337,    367,    454,    359,    448,    392,    345,    348,    341
+    348,    351,    352,    354,    355,    356,    357,    359,    362,    363
 ]
 
 
@@ -123,6 +115,6 @@ def process_all_users_feature_engineering(user_ids, alcoholic, identification_pa
 
 
 process_all_users_feature_engineering(trainAlcoholic, True, "train_alcoholic")
-# process_all_users_feature_engineering(trainNonAlcoholic, True, "train_non_alcoholic")
+process_all_users_feature_engineering(trainNonAlcoholic, False, "train_non_alcoholic")
 process_all_users_feature_engineering(testAlcoholic, True, "test_alcoholic")
-# process_all_users_feature_engineering(testNonAlcoholic, True, "test_non_alcoholic")
+process_all_users_feature_engineering(testNonAlcoholic, False, "test_non_alcoholic")
