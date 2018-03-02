@@ -7,3 +7,6 @@ scrapy == 1.5.0
 requests
 plotly
 jupyter
+
+matplotlib
+mpl_toolkits
