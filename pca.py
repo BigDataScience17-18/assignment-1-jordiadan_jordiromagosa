@@ -6,20 +6,20 @@ import pandas as pd
 #   columns = ['Min', 'Max', 'Sd', 'Mean', 'Median', 'IQR', 'Q(0.025)', 'Q(0.25)', 'Q(0.75)', 'Q(0.975)']
 #   rows = Repetitions
 
-df = pd.read_csv(filepath_or_buffer='engineered/train_alcoholic_rows.csv',
+df = pd.read_csv(filepath_or_buffer='engineered/train_alcoholic_columns.csv',
                  header=None,
-                 sep=",")
+                 sep=',',
+                 low_memory=False)
 
 df = df.loc[:, [1, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]]
 df.columns = ['Class', 'Min', 'Max', 'Sd', 'Mean', 'Median', 'IQR', 'Q(0.025)', 'Q(0.25)', 'Q(0.75)', 'Q(0.975)']
 
-# print(df)
 # split data table into data X and class labels y
 
 X = df.ix[:, 1:].values
 y = df.ix[:, 0].values
 
-# print(X)
+print(X)
 # print(y)
 
 import plotly.plotly as py
