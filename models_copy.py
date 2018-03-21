@@ -10,6 +10,12 @@ def read_data(filename):
                        sep=",",
                        low_memory=False)
 
+
+def print_outcome_variables(data):
+    outcomes = data['Alcoholic'].value_counts()
+    print(outcomes)
+
+
 def plot_model(y_test, predictions):
     print(metrics.confusion_matrix(y_test, predictions))
 
@@ -40,7 +46,7 @@ def model_columns():
     X_test = test.ix[:, 1:]
 
     y_test = test["Alcoholic"]
-    #y_test = pd.get_dummies(y_test)
+    # y_test = pd.get_dummies(y_test)
 
     # Train model
     # lr = linear_model.LinearRegression()
@@ -53,11 +59,11 @@ def model_columns():
     # The coefficients
     print('Coefficients: \n', lr.coef_)
     # The mean squared error
-    #print("Mean squared error: %.2f" % mean_squared_error(y_test, y_pred))
+    # print("Mean squared error: %.2f" % mean_squared_error(y_test, y_pred))
     # Explained variance score: 1 is perfect prediction
-    #print('Variance score: %.2f' % r2_score(y_test, y_pred))
+    # print('Variance score: %.2f' % r2_score(y_test, y_pred))
 
-    #print(X_test['Min'].size)
+    # print(X_test['Min'].size)
     print(y_test.size)
 
     print('Model score:' + str(model.score(X_test, y_test)))
@@ -69,7 +75,9 @@ def model_rows():
     # Training set
     train = read_data('train_1_rows')
 
-    #train.drop(train.columns[[0, 2, 4]], axis=1, inplace=True)
+    print_outcome_variables(train)
+
+    # train.drop(train.columns[[0, 2, 4]], axis=1, inplace=True)
     train.drop(train.columns[[0]], axis=1, inplace=True)
 
     print(train)
@@ -77,10 +85,8 @@ def model_rows():
     X_train = train.ix[:, 1:]
     X_train = pd.get_dummies(X_train)
     y_train = train["Alcoholic"]
-    #y_train = pd.get_dummies(y_train)
+    # y_train = pd.get_dummies(y_train)
 
-    print(X_train)
-    print(y_train)
 
     # Test set
     test = read_data('test_1_rows')
@@ -100,16 +106,17 @@ def model_rows():
     # The coefficients
     print('Coefficients: \n', lr.coef_)
     # The mean squared error
-    #print("Mean squared error: %.2f" % mean_squared_error(y_test, y_pred))
+    # print("Mean squared error: %.2f" % mean_squared_error(y_test, y_pred))
     # Explained variance score: 1 is perfect prediction
-    #print('Variance score: %.2f' % r2_score(y_test, y_pred))
+    # print('Variance score: %.2f' % r2_score(y_test, y_pred))
 
-    #print(X_test['Min'].size)
+    # print(X_test['Min'].size)
     print(y_test.size)
 
     print('Model score:' + str(model.score(X_test, y_test)))
 
     plot_model(y_test, y_pred)
 
-#model_columns()
+
+# model_columns()
 model_rows()
